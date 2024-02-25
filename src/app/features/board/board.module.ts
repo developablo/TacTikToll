@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { CellComponent } from './cell/cell.component';
+import { MainBoardComponent } from './main-board/main-board.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  declarations: [CellComponent, MainBoardComponent],
+  imports: [CommonModule],
 })
-export class BoardModule { }
+export class BoardModule {}
