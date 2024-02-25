@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './main-board.component.html',
   styleUrl: './main-board.component.scss',
 })
-export class MainBoardComponent {}
+export class MainBoardComponent {
+  public cells: string[] = ['', '', '', '', '', '', '', '', ''];
+}

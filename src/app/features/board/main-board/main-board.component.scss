@@ -1,0 +1,13 @@
+.main-board {
+  height: 200pt;
+  width: 200pt;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: 1fr;
+}
+.cell-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
