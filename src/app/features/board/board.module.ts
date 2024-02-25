@@ -6,5 +6,6 @@ import { MainBoardComponent } from './main-board/main-board.component';
 @NgModule({
   declarations: [CellComponent, MainBoardComponent],
   imports: [CommonModule],
+  exports: [MainBoardComponent],
 })
 export class BoardModule {}
