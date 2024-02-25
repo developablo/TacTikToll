@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'cell',
@@ -6,8 +12,10 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
   styleUrl: './cell.component.scss',
 })
 export class CellComponent {
-  @Input('card') card: string = '';
+  @Input() card: string = '';
+  @Input() id: number = -1;
+  @Output() selectedId = new EventEmitter<number>();
   public OnClick() {
-    this.card = 'X';
+    this.selectedId.emit(this.id);
   }
 }

@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class MainBoardComponent {
   public cells: string[] = ['', '', '', '', '', '', '', '', ''];
+  private currentPlayer: boolean = true;
+  public setBoard(id: any) {
+    this.cells[id] = this.currentPlayer ? 'X' : 'O';
+    this.togglePlayer();
+  }
+  private togglePlayer() {
+    this.currentPlayer = !this.currentPlayer;
+  }
 }
