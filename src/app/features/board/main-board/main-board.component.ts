@@ -54,6 +54,8 @@ export class MainBoardComponent implements OnInit {
         squares[a].user === squares[b].user &&
         squares[a].user === squares[c].user
       ) {
+        // TODO: first calculate if rock beats scissors beats paper
+        // TODO: finish game here, show winner on template
         return squares[a].user;
       }
     }
