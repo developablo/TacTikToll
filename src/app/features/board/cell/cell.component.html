@@ -1,1 +1,3 @@
-<button (click)="OnClick()" class="cell">{{ card }}</button>
+<button (click)="OnClick()" class="cell" class="{{ card?.color }}">
+  {{ card?.value }}
+</button>

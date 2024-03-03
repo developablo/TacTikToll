@@ -1,23 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Card } from '../models/card.model';
 
 @Component({
   selector: 'main-board',
   templateUrl: './main-board.component.html',
   styleUrl: './main-board.component.scss',
 })
-export class MainBoardComponent {
-  public cells: string[] = ['', '', '', '', '', '', '', '', ''];
-  private currentPlayer: boolean = true;
-  public setBoard(id: any) {
-    this.cells[id] = this.currentPlayer ? 'X' : 'O';
+export class MainBoardComponent implements OnInit {
+  public cells: Card[] = [];
+  private isPlayerOneCurrentPlayer: boolean = true;
+
+  ngOnInit(): void {
+    this.setInitialBoard();
+  }
+
+  private setInitialBoard(): void {
+    for (let i = 0; i < 9; i++) {
+      this.cells.push(new Card(i, 0, '', ''));
+    }
+  }
+
+  public setBoardAfterMove(id: number) {
+    const affectedCell: Card | undefined = this.cells.find(
+      (card: Card) => card.id === id
+    );
+    (affectedCell as Card).user = this.isPlayerOneCurrentPlayer ? 1 : 2;
+    (affectedCell as Card).value = 'rock';
+    (affectedCell as Card).color = this.isPlayerOneCurrentPlayer
+      ? 'red'
+      : 'blue';
     console.log(this.calculateWinner(this.cells));
     this.togglePlayer();
   }
   private togglePlayer() {
-    this.currentPlayer = !this.currentPlayer;
+    this.isPlayerOneCurrentPlayer = !this.isPlayerOneCurrentPlayer;
   }
 
-  private calculateWinner(squares: string[]) {
+  private calculateWinner(squares: Card[]) {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -32,10 +51,10 @@ export class MainBoardComponent {
       const [a, b, c] = lines[i];
       if (
         squares[a] &&
-        squares[a] === squares[b] &&
-        squares[a] === squares[c]
+        squares[a].user === squares[b].user &&
+        squares[a].user === squares[c].user
       ) {
-        return squares[a];
+        return squares[a].user;
       }
     }
     return null;
