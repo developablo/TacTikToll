@@ -1,8 +1,14 @@
-<div class="main-board">
-  @for (cell of cells; track $index) {<cell
-    class="cell-item"
-    [card]="cell"
-    [id]="$index"
-    (selectedId)="setBoardAfterMove($event)"
-  />}
+<div class="board-display">
+  <div class="players-display">
+    <span class="player player-one">Player 1</span>
+    <span class="player player-two">Player 2</span>
+  </div>
+  <div class="main-board">
+    @for (cell of cells; track $index) {<cell
+      class="cell-item"
+      [card]="cell"
+      [id]="$index"
+      (selectedId)="setBoardAfterMove($event)"
+    />}
+  </div>
 </div>
