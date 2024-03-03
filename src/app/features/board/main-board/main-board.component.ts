@@ -8,7 +8,8 @@ import { Card } from '../models/card.model';
 })
 export class MainBoardComponent implements OnInit {
   public cells: Card[] = [];
-  private isPlayerOneCurrentPlayer: boolean = true;
+  public isPlayerOneCurrentPlayer: boolean = true;
+  public selectedWeapon: string = '';
 
   ngOnInit(): void {
     this.setInitialBoard();
@@ -16,7 +17,7 @@ export class MainBoardComponent implements OnInit {
 
   private setInitialBoard(): void {
     for (let i = 0; i < 9; i++) {
-      this.cells.push(new Card(i, 0, '', ''));
+      this.cells.push(new Card(i, -1, '', ''));
     }
   }
 
@@ -24,19 +25,28 @@ export class MainBoardComponent implements OnInit {
     const affectedCell: Card | undefined = this.cells.find(
       (card: Card) => card.id === id
     );
-    (affectedCell as Card).user = this.isPlayerOneCurrentPlayer ? 1 : 2;
-    (affectedCell as Card).value = 'rock';
-    (affectedCell as Card).color = this.isPlayerOneCurrentPlayer
-      ? 'red'
-      : 'blue';
-    console.log(this.calculateWinner(this.cells));
-    this.togglePlayer();
+    // TODO: first calculate if rock beats scissors beats paper
+    const winner = this.calculateCellWinner(
+      this.selectedWeapon,
+      (affectedCell as Card).value
+    );
+    if ((affectedCell as Card).value === winner) {
+      // Tie, wins the local
+    } else if (winner) {
+      (affectedCell as Card).user = this.isPlayerOneCurrentPlayer ? 1 : 2;
+      (affectedCell as Card).value = this.selectedWeapon;
+      (affectedCell as Card).color = this.isPlayerOneCurrentPlayer
+        ? 'red'
+        : 'blue';
+      console.log(this.calculateOverallWinner(this.cells));
+      this.togglePlayer();
+    }
   }
   private togglePlayer() {
     this.isPlayerOneCurrentPlayer = !this.isPlayerOneCurrentPlayer;
   }
 
-  private calculateWinner(squares: Card[]) {
+  private calculateOverallWinner(squares: Card[]) {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -54,11 +64,27 @@ export class MainBoardComponent implements OnInit {
         squares[a].user === squares[b].user &&
         squares[a].user === squares[c].user
       ) {
-        // TODO: first calculate if rock beats scissors beats paper
         // TODO: finish game here (or could the game be infinite? or with timers?), show winner on template
         return squares[a].user;
       }
     }
     return null;
+  }
+
+  private calculateCellWinner(challenger: string, oponent: string): string {
+    if (challenger) {
+      if (oponent) {
+        switch (challenger) {
+          case 'rock':
+            return oponent === 'paper' ? oponent : challenger;
+          case 'scissors':
+            return oponent === 'rock' ? oponent : challenger;
+          case 'paper':
+            return oponent === 'scissors' ? oponent : challenger;
+        }
+      }
+      return challenger;
+    }
+    return '';
   }
 }

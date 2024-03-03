@@ -3,6 +3,9 @@
     <span class="player player-one">Player 1</span>
     <span class="player player-two">Player 2</span>
   </div>
+  <div class="current-turn">
+    current turn: {{ isPlayerOneCurrentPlayer ? "player 1" : "player 2" }}
+  </div>
   <div class="main-board">
     @for (cell of cells; track $index) {<cell
       class="cell-item"
@@ -11,4 +14,6 @@
       (selectedId)="setBoardAfterMove($event)"
     />}
   </div>
+  <available-cards (selectedWeapon)="selectedWeapon = $event" />
+  <div class="selected-weapon">selected weapon: {{ selectedWeapon }}</div>
 </div>

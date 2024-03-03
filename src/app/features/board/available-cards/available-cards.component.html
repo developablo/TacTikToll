@@ -1,0 +1,5 @@
+<div class="weapons-container">
+  @for (weapon of weapons; track $index){
+  <button class="weapon" (click)="onSelection(weapon)">{{ weapon }}</button>
+  }
+</div>
