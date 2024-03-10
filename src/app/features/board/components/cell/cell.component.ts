@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Card } from '../models/card.model';
+import { Card } from '../../models/card.model';
 
 @Component({
   selector: 'cell',
